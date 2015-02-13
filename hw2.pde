@@ -3,11 +3,12 @@
 //Tete Zhang
 
 int[][] matrix = new int[101][101];
-int[][] sequence = new int[99][2];
+int[][] sequence = new int[3][2];
 String[] nameList = new String[101];
+
 void setup() {
   //basics
-  size(300,300);
+  size(600,600);
   frameRate(3);
   background(230,230,250);
   
@@ -38,7 +39,6 @@ void setup() {
   //start recursive
   for (int z = 0; z<99; z++) {
     int[] cross = findMin();
-    println(cross);
     sequence[z] = cross;
 
     int[] plus = new int[101];
@@ -54,18 +54,33 @@ void setup() {
      matrix[a][cross[0]] = -1;
      matrix[a][cross[1]] = -1;
     }
-    println(sequence[z]);
+  }
+  //int[][] sequence = {{1,3}, {2,4}, {102, 5}, {103, 6}, {7,8}};
+  stroke(0);
+  fill(50);
+  for (int i = 0; i < 99; i++) {
+    if (sequence[i][0]-101< 0){
+      text(nameList[sequence[i][0]],0,(2*i)*15,50,15);
+      text(nameList[sequence[i][1]],0,(2*i)*15+15,50,15);
+      line(50,7.5+30*i,60+i*10,7.5+30*i);
+      line(50,30*i+22.5,60+i*10,30*i+22.5);
+      line(60+i*10,7.5+30*i,60+i*10,30*i+22.5);
+    }
+    else{
+      int index = sequence[i][0]-101;
+      int t = index - 1;
+      text(nameList[sequence[i][1]],0,(2*i)*15,50,15);
+      line(50+(index)*10,30*t+15, 
+           60+(index+1)*10,30*t+15);
+      line(50,7.5+30*(index+1),60+(index+1)*10,7.5+30*(index+1));
+      line(60+(index+1)*10,30*t+15,
+           60+(index+1)*10,7.5+30*(index+1));
+    }
   }
 }
 
 
 void draw() {
-  stroke(0);
-  fill(50);
-  //translate (0,height);
-  //rotate(PI/2);
-  text(nameList[sequence[49][0]],0,0,60,60);
-  text(nameList[sequence[49][1]],0,60,60,60);
 }
 
 int[] findMin(){
